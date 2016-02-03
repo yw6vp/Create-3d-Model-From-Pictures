@@ -24,7 +24,7 @@ def make_3d_model(boundary):
 	x_original, y_original = transform(boundary)
 	# Total number of cross sections
 	N = 10
-	# Initialize x, y and z with NAN and height rows and N cols
+	# Initialize x, y and z with NAN and height rows and 2 * N cols
 	x = np.empty((height, 2 * N))
 	x[:] = np.NAN
 	y = np.empty((height, 2 * N))
