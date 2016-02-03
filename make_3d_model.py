@@ -18,8 +18,28 @@ def transform(boundary):
 
 # Temporary version, make 3d model by rotating the same cross section
 def make_3d_model(boundary):
+	height = len(boundary)
 	x_original, y_original = transform(boundary)
-	
+	# Total number of cross sections
+	N = 20
+	# Initialize x and y with NAN, both x and y have height rows and N cols
+	x = np.empty((height, N))
+	x[:] = np.NAN
+	y = np.empty((height, N))
+	y[:] = np.NAN
+	for i in range(height):
+		for j in range(N):
+			theta = np.pi * 2 * j / N
+			x[i][j] = x_original[i] * np.cos(theta)
+			y[i][j] = y_original[i] * np.cos(theta)
+
+	return x, y
+
+
+
+
+
+
 
 
 
