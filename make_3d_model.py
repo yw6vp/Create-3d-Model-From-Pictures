@@ -19,7 +19,7 @@ def transform(boundary):
 	return x, y
 
 # Temporary version, make 3d model by rotating the same cross section
-def make_3d_model(boundary):
+def make_3d_model_naive(boundary):
 	height = len(boundary)
 	x_original, y_original = transform(boundary)
 	# Total number of cross sections
@@ -41,6 +41,9 @@ def make_3d_model(boundary):
 			z[i][2 * j] = y_original[i * 2]
 			z[i][2 * j + 1] = y_original[i * 2 + 1]
 	return x, y, z
+
+def make_3d_model(boundary):
+	
 
 def plot_3d_model(x, y, z):
 	# Convert x, y, z to 1d array
