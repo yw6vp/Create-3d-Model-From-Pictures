@@ -10,7 +10,7 @@ y = np.cos(2*np.pi*t)*r_with_error
 y = np.append(y, [y[0]])
 # x = np.sin(2*np.pi*t)
 # y = np.cos(2*np.pi*t)
-tck, u = interpolate.splprep([x, y], k=3, s=0)
+tck, u = interpolate.splprep([x, y], s=0)
 unew = np.arange(0, 1.01, 0.01)
 out = interpolate.splev(unew, tck)
 plt.figure()
