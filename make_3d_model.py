@@ -3,6 +3,8 @@ import sys
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
+from matplotlib import cm
+from matplotlib.ticker import LinearLocator, FormatStrFormatter
 from random import random
 from scipy import interpolate
 
@@ -72,11 +74,18 @@ def make_3d_model(boundary):
 	# smooth_one_layer(x[100], y[100])
 
 	layers = []
+	fitted_x = []
+	fitted_y = []
+	fitted_z = []
 	for i in range(height):
 		tck, u = interpolate.splprep([x[i], y[i]], s=0)
 		unew = np.arange(0, 1.01, 0.01)
 		out = interpolate.splev(unew, tck)
 		layers.append([out[0], out[1]])
+		# fitted_x.extend(out[0])
+		# fitted_y.extend(out[1])
+		# fitted_z.extend([i for everything in out[0]])
+	# return x, y, z, layers, fitted_x, fitted_y, fitted_z
 	return x, y, z, layers
 	# return x, y, z
 
@@ -114,14 +123,44 @@ def plot_one_layer(x, y, model, index):
 	plt.title('Spline of parametrically-defined curve')
 	plt.show()
 
+# def plot_3d_model(x, y, z):
+# 	fig = plt.figure()
+# 	ax = fig.gca(projection='3d')
+# 	print x, y, z
+# 	surf = ax.plot_surface(x, y, z,             # data values (2D Arryas)
+#                        rstride=2,           # row step size
+#                        cstride=2,           # column step size
+#                        cmap=cm.RdPu,        # colour map
+#                        linewidth=1,         # wireframe line width
+#                        antialiased=True)
+# 	ax.zaxis.set_major_locator(LinearLocator(6))
+# 	ax.zaxis.set_major_formatter(FormatStrFormatter('%.02f'))
+# 	ax.set_title('3D Model')        # title
+# 	fig.colorbar(surf, shrink=0.5, aspect=5)     # colour bar
+
+# 	ax.view_init(elev=30,azim=70)                # elevation & angle
+# 	ax.dist=8                                    # distance from the plot
+# 	plt.show()
+
+def write_to_file(model):
+	height = len(model)
+	with open('model.csv', 'w') as f:
+		for i in range(height):
+			for j in range(len(model[i][0])):
+				f.write(str(model[i][0][j]) + ', ' + str(model[i][1][j]) + ', ' + str(i) + '\n')
+	return f
+
 th = int(sys.argv[1])
 boundary = get_boundary('q.png', th)
 # x, y, z = make_3d_model_naive(boundary)
 # plot_3d_model_naive(x, y, z)
 # x, y, z = make_3d_model(boundary)
 # plot_3d_model_naive(x, y, z)
+# x, y, z, model, fitted_x, fitted_y, fitted_z = make_3d_model(boundary)
 x, y, z, model = make_3d_model(boundary)
-plot_one_layer(x, y, model, 100)
+# plot_one_layer(x, y, model, 100)
+write_to_file(model)
+
 
 
 

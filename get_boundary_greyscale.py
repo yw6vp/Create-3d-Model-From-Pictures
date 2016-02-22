@@ -14,7 +14,7 @@ def get_boundary(filename, th):
 	# Find edges
 	mask = mask.filter(ImageFilter.FIND_EDGES)
 	# cropping off the edges of the image because their values are also 255
-	mask = mask.crop((10, 5, width - 10, height - 5))
+	mask = mask.crop((10, 10, width - 10, height - 10))
 	# mask.show()
 	# return only the outer boundary pixels
 	width, height = mask.size
